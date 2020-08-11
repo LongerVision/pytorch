@@ -122,6 +122,14 @@ if [[ "${BUILD_ENVIRONMENT}" == *-android* ]]; then
   exec ./scripts/build_android.sh "${build_args[@]}" "$@"
 fi
 
+if [[ "$BUILD_ENVIRONMENT" != *android* && "$BUILD_ENVIRONMENT" == *vulkan* ]]; then
+  echo "XXX-test-build"
+  env
+  echo "XXX-test-build~"
+  export USE_VULKAN=1
+  export VULKAN_SDK=/var/lib/jenkins/vulkansdk/1.2.148.0
+fi
+
 if [[ "$BUILD_ENVIRONMENT" == *rocm* ]]; then
   # hcc used to run out of memory, silently exiting without stopping
   # the build process, leaving undefined symbols in the shared lib,
